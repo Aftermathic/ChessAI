@@ -36,11 +36,20 @@ void Window::clear() {
 	SDL_RenderClear(renderer);
 }
 
-void Window::renderTexture(SDL_Texture* texture, int x, int y, int w, int h) {
-	SDL_Rect src = {0, 0, w, h};
-	SDL_Rect dst = {x, y, w, h};
+void Window::renderObject(Object& object) {
+	SDL_Rect src; 
+	src.x = object.getCurrentFrame().x;
+	src.y = object.getCurrentFrame().y;
+	src.w = object.getCurrentFrame().w;
+	src.h = object.getCurrentFrame().h;
 
-	SDL_RenderCopy(renderer, texture, &src, &dst);
+	SDL_Rect dst;
+	dst.x = object.getX();
+	dst.y = object.getY();
+	dst.w = object.getCurrentFrame().w;
+	dst.h = object.getCurrentFrame().h;
+
+	SDL_RenderCopy(renderer, object.getTexture(), &src, &dst);
 }
 
 void Window::display() {

@@ -27,6 +27,14 @@ float Object::getY() {
 	return y;
 }
 
+void Object::setX(float p_x) {
+	x = p_x;
+}
+
+void Object::setY(float p_y) {
+	y = p_y;
+}
+
 SDL_Texture* Object::getTexture() {
 	return tex;
 }

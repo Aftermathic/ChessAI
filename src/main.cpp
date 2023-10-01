@@ -66,16 +66,17 @@ int main(int argc, char* args[]) {
         {'P', P}
     };
 
-    std::vector<Object> pieces = {};
+    std::vector<std::vector<Object>> pieces = {};
 
     std::vector<int> numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     char backslash = '/';
 
     int counter = 0;
     int counter2 = 0;
+
+    std::vector<Object> piecesPlaceholder = {};
     while (counter < 63) {
         char character = startingFEN[counter2];
-
         bool is_number = false;
 
         for (int& i : numbers) {
@@ -89,17 +90,19 @@ int main(int argc, char* args[]) {
 
         if (is_number) {
             for (int i = 0; i < (int) character - 48; i++) {
-                pieces.push_back(Object(nothing, 0, 0, 91, 91));
+                piecesPlaceholder.push_back(Object(nothing, 0, 0, 91, 91));
                 counter++;
             }
         }
         else {
-            if (character == backslash) { }
+            if (character == backslash) {
+                pieces.push_back(piecesPlaceholder);
+                piecesPlaceholder.clear();
+            }
             else {
-                pieces.push_back(Object(pieceDictionary[character], 0, 0, 91, 91));
+                piecesPlaceholder.push_back(Object(pieceDictionary[character], 0, 0, 91, 91));
             }
         }
-
 
         counter2++;
     }
@@ -117,8 +120,10 @@ int main(int argc, char* args[]) {
         window.clear();
         window.renderObject(chessboard);
 
-        for (Object& piece : pieces) {
-            window.renderObject(piece);
+        for (auto& t : pieces) {
+            for (auto& piece : t) {
+                window.renderObject(piece);
+            }
         }
 
         window.display();

@@ -9,6 +9,10 @@ class Object
 
 		float getX();
 		float getY();
+
+		void setX(float p_x);
+		void setY(float p_y);
+
 		SDL_Texture* getTexture(); // to render it on screen
 		SDL_Rect getCurrentFrame(); // can be used for animations
 
